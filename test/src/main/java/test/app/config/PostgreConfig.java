@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Order(2)
 @Configuration
-@PropertySource(value = "classpath:/application.properties")
+@PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 public class PostgreConfig {	
 	
