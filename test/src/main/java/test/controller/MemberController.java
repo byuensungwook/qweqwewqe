@@ -1,40 +1,60 @@
 package test.controller;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
 
-import test.domain.Member;
-import test.repository.MemberRepository;
+import test.dto.MemberDto;
+import test.service.MemberService;
 
-@RestController
-@RequestMapping(value="/test.do")
+@Controller
 public class MemberController {
 
-  @Autowired
-  MemberRepository memberRepository;
+	@Autowired
+	MemberService memeberService;
 
-   @Autowired
-   Member member;
-
-    @RequestMapping(method = RequestMethod.POST,path = "/save")
-    public String savtest() {
-        member.setAge("30");
-        member.setBirth("19900101");        
-        member.setName("홍길동");
-        member.setPw("test");
-        member.setSex("남성");
-        Date today = new Date();
-        member.setDate(today);
-
-        try {
-            memberRepository.save(member);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return "okok";
-    }
+	/**
+	 * 글을 수정한다.
+	 * @param sampleVO - 수정할 정보가 담긴 VO
+	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
+	 * @param status
+	 * @return "forward:/egovSampleList.do"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/list.do", method = RequestMethod.POST) 
+	public String list(@ModelAttribute("dto") MemberDto dto, Model model, SessionStatus status) throws Exception {
+		
+		List list = memeberService.list(dto);
+				
+//		List<?> list = memeberService.list(dto);
+		model.addAttribute("list", list);
+		
+		return "index";
+	}
+		
+	/**
+	 * 글을 수정한다.
+	 * @param sampleVO - 수정할 정보가 담긴 VO
+	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
+	 * @param status
+	 * @return "forward:/egovSampleList.do"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
+	public String update(@ModelAttribute("dto") MemberDto dto, Model model, SessionStatus status) throws Exception {
+		
+		memeberService.update(dto);
+				
+//		List<?> list = memeberService.list(dto);
+//		model.addAttribute("list", list);
+		
+		return "index";
+	}
 }

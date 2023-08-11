@@ -1,70 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<form name="frm"> 
- <table border="1" style="text-align:left;width:800px;height:300px">
-<tr>
-<td>아이디</td>
-<td><input type="text" name="memberId" size="30"></td>
-</tr>
-<tr>
-<td>비밀번호</td>
-<td><input type="password" name="memberPwd" size="30"></td>
-</tr>
-<tr>
-<td>비밀번호 확인</td>
-<td><input type="password" name="memberPwd2" size="30"></td>
-</tr>
-<tr>
-<td>이름</td>
-<td><input type="text" name="memberName" size="30"></td>
-</tr>
-<tr>
-<td>이메일</td>
-<td><input type="email" name="memberEmail" size="30"></td>
-</tr>
-<tr>
-<td>성별</td>
-<td>
-<input type="radio" name ="memberGender" value="M" checked>남
-<input type="radio" name ="memberGender" value="F">여
-</td>
-</tr>
-<tr>
-<td>지역</td>
-<td><select name="memberAddr" style="width:100px;height:25px">
-    <option value="전주">전주</option>
-    <option value="대전">대전</option>
-    <option value="서울">서울</option>
-    </select>
-</td>
-</tr>
-<tr>
-<td>연락처</td>
-<td>
-<input type="text" name="memberPhone" size="30">
-</td>
-</tr>
-<tr>
-<td>주민번호</td>
-<td><input type="number" name="memberJumin" size="30">    
-</td>
-</tr>
- 
-<tr>
-<td>취미</td>
-<td>
-<input type="checkbox" name ="memberHobby" value="축구" checked>축구
-<input type="checkbox" name ="memberHobby" value="농구">농구
-<input type="checkbox" name ="memberHobby" value="야구">야구
-</td>
-</tr>
- 
-<tr>
-<td>확인</td>
-<td>
-<input type="button" value="확인" onclick="check();"> 
-<input type="reset" value="리셋"> 
-</td>
-</tr>
- </table>
- </form>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+	<head>
+		<script type="text/javaScript" language="javascript" defer="defer">
+		    function fn_list() {
+		    	console.log("list");
+		       	document.listForm.action = "<c:url value='/list.do'/>";
+		       	document.listForm.submit();
+		    }
+		    
+		    function fn_update() {
+		    	console.log("update");
+		       	//document.updateFrom.action = "<c:url value='/update.do'/>";
+		       	//document.updateFrom.submit();
+		    }
+		</script>
+</head>
+	
+	<body>	
+		<form>
+			<div class="update">
+	            <button id="update" onclick="fn_list()">수정</button>
+	        </div>
+		</form>	  
+	</body>		
+</html>
