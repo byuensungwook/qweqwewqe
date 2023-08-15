@@ -22,38 +22,31 @@ import lombok.NoArgsConstructor;
  */
 @Entity													// DB테이블
 @Getter													// getter 사용o/settetr 사용x
-@Table(name = "member")									// 테이블명칭 세팅
+@Table(name = "board")									// 테이블명칭 세팅
 @NoArgsConstructor(access = AccessLevel.PROTECTED)		// 접근제어로 의미없는 객체 생성 방지
-public class Member {
+public class Board {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String name;
+	private String title;
 	
-	private String pw;
-	
-	private String age;
-	
-	private String sex;
-	
-	private String birth;
+	private String content;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date regdate;	
+	private Date date;	
 	
+
 	/* 생성자에 @Builder 적용
 	 * 객체를 정의하고 그 객체를 생성할 때 보통 생성자를 통해 생성
 	 * 데이터 일관성을 위해 정보들을 다 받은 후에 객체를 생성
 	 */
     @Builder
-	public Member(String name, String pw, String age, String sex, String birth, Date regdate) {
-		this.name = name;
-		this.pw = pw;
-		this.age = age;
-		this.sex = sex;
-		this.birth = birth;
-		this.regdate = regdate;
-	}
+	public Board(String title, String content, Date date) {
+		this.title = title;
+		this.content = content;
+		this.date = date;
+	}    
+       
 }

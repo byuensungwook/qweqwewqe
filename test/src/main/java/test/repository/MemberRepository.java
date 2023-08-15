@@ -9,9 +9,5 @@ import test.domain.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository	<Member, Long> {	// JpaRepository를 상속하여 사용. <객체, ID>
-    public List<Member> findAll(); //selectList
-
-    public Member findMemberById(int id); //selectOne
-    
-    public void update(String lastName); //selectList
+    public List<Member> findMemberBy(); //selectList
 }

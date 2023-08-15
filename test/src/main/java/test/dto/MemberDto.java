@@ -2,10 +2,11 @@ package test.dto;
 
 import java.util.Date;
 
-import lombok.AccessLevel;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import test.domain.Member;
 
 /* DTO : 데이터전송객체(Data Transfer Object) 계층 간 데이터 전송을 위한 도메인 모델 대신 사용되는 객체
@@ -26,20 +27,20 @@ public class MemberDto {
 	
 	private String birth;
 
-	private Date date;
+	private Date regdate;
 	
 	/*
 	 * DTO > Entity
 	 */
 	@Builder
-	public MemberDto(Long id, String name, String pw, String age, String sex, String birth, Date date) {
+	public MemberDto(Long id, String name, String pw, String age, String sex, String birth, Date regdate) {
 		this.id = id;
 		this.name = name;
 		this.pw = pw;
 		this.age = age;
 		this.sex = sex;
 		this.birth = birth;
-		this.date = date;
+		this.regdate = regdate;
 	}
 
 	/* Entity to Dto */
@@ -50,7 +51,7 @@ public class MemberDto {
 		this.age = m.getAge();
 		this.sex = m.getSex();
 		this.birth = m.getBirth();
-		this.date = m.getDate();
+		this.regdate = m.getRegdate();
 	}
 
 	public Member toEntity() {
@@ -59,7 +60,7 @@ public class MemberDto {
                 .pw(pw)
                 .age(age)
                 .sex(sex)
-                .date(date)
+                .regdate(regdate)
                 .build();
     }
 }

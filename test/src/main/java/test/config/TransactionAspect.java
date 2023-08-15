@@ -1,4 +1,4 @@
-package test.app.config;
+package test.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.Advisor;

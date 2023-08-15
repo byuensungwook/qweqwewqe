@@ -16,5 +16,9 @@ spring.jpa:
 spring:
   main:
     allow-bean-definition-overriding: true
-
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      
 springboot.jwt.secret: otipms!@#
