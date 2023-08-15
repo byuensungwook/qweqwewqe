@@ -34,7 +34,7 @@ public class MemberController {
 	@PostMapping(value="/selectBoard", consumes = "application/x-www-form-urlencoded")
 	@ResponseBody
 	//@RequestMapping(value = "/selectBoard.do", method = RequestMethod.POST) 
-	public String selectBoard(Model model, SessionStatus status) throws Exception {
+	public Model selectBoard(Model model, SessionStatus status) throws Exception {
 		
 		
 		System.out.println("##############ist.do#############");
@@ -49,7 +49,7 @@ public class MemberController {
 //		
 		model.addAttribute("boardList", list);
 		
-		return "board";
+		return model;
 	}
 	
 //	/**
