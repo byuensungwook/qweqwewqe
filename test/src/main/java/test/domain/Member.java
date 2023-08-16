@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Getter													// getter 사용o/settetr 사용x
 @Table(name = "member")									// 테이블명칭 세팅
 @NoArgsConstructor(access = AccessLevel.PROTECTED)		// 접근제어로 의미없는 객체 생성 방지
-public class Member {
+public class Member extends BaseTime {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,20 +43,16 @@ public class Member {
 	
 	private String birth;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date regdate;	
-	
 	/* 생성자에 @Builder 적용
 	 * 객체를 정의하고 그 객체를 생성할 때 보통 생성자를 통해 생성
 	 * 데이터 일관성을 위해 정보들을 다 받은 후에 객체를 생성
 	 */
     @Builder
-	public Member(String name, String pw, String age, String sex, String birth, Date regdate) {
+	public Member(String name, String pw, String age, String sex, String birth) {
 		this.name = name;
 		this.pw = pw;
 		this.age = age;
 		this.sex = sex;
 		this.birth = birth;
-		this.regdate = regdate;
 	}
 }

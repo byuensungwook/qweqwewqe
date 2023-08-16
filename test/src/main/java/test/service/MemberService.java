@@ -13,6 +13,7 @@ import test.domain.Member;
 import test.dto.BoardDto;
 import test.dto.MemberDto;
 import test.repository.BoardRepository;
+import test.repository.BoardSpecification;
 import test.repository.MemberRepository;
 
 @Service
@@ -27,23 +28,27 @@ public class MemberService {
 	private BoardRepository boardRepository;
 
 	public List list(MemberDto dto) throws Exception {
-		List<Member> list = memberRepository.findMemberBy();
+		List<Member> list = memberRepository.findAll();
 		
 		List<MemberDto> rtnlist = list.stream().map(m -> new MemberDto(m)).collect(Collectors.toList());
 		
 		return rtnlist;
 	}
 	
-	
-	public List selectBoard() throws Exception {
-		List<Board> list = boardRepository.findBoardBy();
+	/* select board */
+	public List selectBoard(BoardDto dto) throws Exception {
 		
-		List<BoardDto> rtnlist = list.stream().map(m -> new BoardDto(m)).collect(Collectors.toList());
+		List<Board> list = boardRepository.findAll(BoardSpecification.likeTitle(dto.getTitle()));
+		
+		/* entity > dto */
+		List<BoardDto> rtnlist = list.stream().map(BoardDto::new).collect(Collectors.toList());			
 		
 		return rtnlist;
 	}
 	
-	
-	public void update(MemberDto dto) throws Exception {				
+	/* insert board */
+	public void update(BoardDto dto) throws Exception {				
+		Board boardEntity = dto.toEntity();
+		boardRepository.save(boardEntity);
 	}
 }

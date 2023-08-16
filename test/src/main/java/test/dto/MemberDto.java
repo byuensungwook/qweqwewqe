@@ -26,21 +26,18 @@ public class MemberDto {
 	private String sex;
 	
 	private String birth;
-
-	private Date regdate;
 	
 	/*
 	 * DTO > Entity
 	 */
 	@Builder
-	public MemberDto(Long id, String name, String pw, String age, String sex, String birth, Date regdate) {
+	public MemberDto(Long id, String name, String pw, String age, String sex, String birth) {
 		this.id = id;
 		this.name = name;
 		this.pw = pw;
 		this.age = age;
 		this.sex = sex;
 		this.birth = birth;
-		this.regdate = regdate;
 	}
 
 	/* Entity to Dto */
@@ -51,7 +48,6 @@ public class MemberDto {
 		this.age = m.getAge();
 		this.sex = m.getSex();
 		this.birth = m.getBirth();
-		this.regdate = m.getRegdate();
 	}
 
 	public Member toEntity() {
@@ -60,7 +56,6 @@ public class MemberDto {
                 .pw(pw)
                 .age(age)
                 .sex(sex)
-                .regdate(regdate)
                 .build();
     }
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>게시판 목록1</title>
+    <title>index</title>
     <style>
         table {
             width: 100%;
@@ -52,16 +52,24 @@
 	            })
 	        })*/
 	        
-	        $('#select').on('click', function() {	        	
-	        	$('#board').submit();      
+	        /* 조회 */
+	        $('#select').on('click', function() {
+	        	console.log("SELECT");
+	        	$('#board').attr('action', '/selectBoardPost').submit();      
+	        })
+	        
+	        /* 등록 */
+   	        $('#reg').on('click', function() {	   
+				console.log("REG");  	
+	        	$('#board').attr('action', '/updateBoard').submit();      
 	        })
 	    });
     </script>
 </head>
 <body>
 <div style="text-align: center;">
-    <h1>게시판 목록</h1>
-    <form id="board" method="POST" action="/selectBoard">     
+    <h1>메인</h1>
+    <form id="board" method="POST">     
 	    <table style="width: 700px; margin: auto">
 	        <tr>
 	            <th style="width: 10%">번호</th>

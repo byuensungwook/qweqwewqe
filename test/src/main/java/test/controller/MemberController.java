@@ -1,19 +1,20 @@
 package test.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import test.dto.MemberDto;
+import test.dto.BoardDto;
 import test.service.MemberService;
 
 @Controller
@@ -24,22 +25,27 @@ public class MemberController {
 	
 	
 	/**
-	 * 글을 수정한다. ajax
+	 * 조회
 	 * @param sampleVO - 수정할 정보가 담긴 VO
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param status
 	 * @return "forward:/egovSampleList.do"
 	 * @exception Exception
 	 */
-	@PostMapping(value="/selectBoard", consumes = "application/x-www-form-urlencoded")
-	@ResponseBody
+	@PostMapping(value="/selectBoardPost", consumes = "application/x-www-form-urlencoded")
+//	@ResponseBody
 	//@RequestMapping(value = "/selectBoard.do", method = RequestMethod.POST) 
-	public Model selectBoard(Model model, SessionStatus status) throws Exception {
+	public String selectBoardPost(@RequestParam Map map, Model model, SessionStatus status) throws Exception {
 		
+		BoardDto dto = BoardDto.builder()
+				.title((String) map.get("title"))
+				.content((String) map.get("content"))
+				.build();
 		
-		System.out.println("##############ist.do#############");
+		System.out.println(dto.toString());
+		System.out.println("##############selectBoardPost.do#############");
 		
-		List list = memeberService.selectBoard();
+		List list = memeberService.selectBoard(dto);
 				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -49,11 +55,46 @@ public class MemberController {
 //		
 		model.addAttribute("boardList", list);
 		
-		return model;
+		return "/selectBoard";
+	}
+	
+	/**
+	 * 조회
+	 * @param sampleVO - 수정할 정보가 담긴 VO
+	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
+	 * @param status
+	 * @return "forward:/egovSampleList.do"
+	 * @exception Exception
+	 */
+	@GetMapping(value="/selectBoardGet")
+//	@ResponseBody
+	//@RequestMapping(value = "/selectBoard.do", method = RequestMethod.POST) 
+	public String selectBoardGet(RedirectAttributes attributes, Model model, SessionStatus status) throws Exception {
+		
+		System.out.println("##############title#############" + attributes.getAttribute("title"));
+		System.out.println("##############content#############" + attributes.getAttribute("content"));
+		
+		BoardDto dto = BoardDto.builder()
+			    .title((String) attributes.getAttribute("title"))
+			    .content((String) attributes.getAttribute("content"))		    
+			    .build();
+		  
+		
+		List list = memeberService.selectBoard(dto);
+				
+//		ObjectMapper mapper = new ObjectMapper();
+//		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+//		System.out.println("json String =============================================" + json);
+//		
+//		return json;
+//		
+		model.addAttribute("boardList", list);
+		
+		return "/selectBoard";
 	}
 	
 //	/**
-//	 * 글을 수정한다. ajax
+//	 * 조화회 ajax
 //	 * @param sampleVO - 수정할 정보가 담긴 VO
 //	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 //	 * @param status
@@ -83,6 +124,7 @@ public class MemberController {
 ////		return "index";
 //	}
 	
+	
 	/**
 	 * 글을 수정한다.
 	 * @param sampleVO - 수정할 정보가 담긴 VO
@@ -91,32 +133,52 @@ public class MemberController {
 	 * @return "forward:/egovSampleList.do"
 	 * @exception Exception
 	 */
-	@PostMapping("/updatePage")
-	@ResponseBody
-	//@RequestMapping(value = "/updatePage.do", method = RequestMethod.POST) 
-	public String updatePage(@RequestBody MemberDto dto, Model model, SessionStatus status) throws Exception {
-			
-		return "redirect:test";
-	}
-		
-	/**
-	 * 글을 수정한다.
-	 * @param sampleVO - 수정할 정보가 담긴 VO
-	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
-	 * @param status
-	 * @return "forward:/egovSampleList.do"
-	 * @exception Exception
-	 */
-	@PostMapping("/update")
-	@ResponseBody
+	@PostMapping("/updateBoard")
+//	@ResponseBody
 	//@RequestMapping(value = "/update.do", method = RequestMethod.POST)
-	public String update(@RequestBody MemberDto dto, Model model, SessionStatus status) throws Exception {
+	public String updateBoard(@ModelAttribute BoardDto dto, Model model, SessionStatus status) throws Exception {
+		
+		System.out.println("##############updateBoard.do#############");
+		
+//		memeberService.update(dto);
+				
+//		List<?> list = memeberService.list(dto);
+//		model.addAttribute("list", list);
+		
+		return "/updateBoard";
+	}
+	
+	/**
+	 * 글을 수정한다. redirect 
+	 * @param sampleVO - 수정할 정보가 담긴 VO
+	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
+	 * @param status
+	 * @return "forward:/egovSampleList.do"
+	 * @exception Exception
+	 */
+	@PostMapping("/regBoard")
+//	@ResponseBody
+	//@RequestMapping(value = "/update.do", method = RequestMethod.POST)
+	public String regBoard(@RequestParam Map map, SessionStatus status, RedirectAttributes attributes) throws Exception {
+		
+		
+		BoardDto dto = BoardDto.builder()			
+				.title(String.valueOf(map.get("title")))
+				.writer(String.valueOf(map.get("writer")))
+				.content(String.valueOf(map.get("content")))
+				.build();
+		
+		System.out.println(dto.toString());
+		System.out.println("##############regBoard.do#############");
 		
 		memeberService.update(dto);
 				
 //		List<?> list = memeberService.list(dto);
 //		model.addAttribute("list", list);
 		
-		return "redirect:list.do";
+		attributes.addAttribute("title", dto.getTitle());
+		attributes.addAttribute("content", dto.getContent());
+		
+		return "redirect:selectBoardGet";
 	}
 }
