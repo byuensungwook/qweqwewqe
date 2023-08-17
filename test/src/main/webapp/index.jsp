@@ -50,46 +50,35 @@
 	        			console.log("success");
 	        		}
 	            })
-	        })*/
+	        })*/	        
 	        
-	        /* 조회 */
-	        $('#select').on('click', function() {
-	        	console.log("SELECT");
-	        	$('#board').attr('action', '/selectBoardPost').submit();      
-	        })
-	        
-	        /* 등록 */
-   	        $('#reg').on('click', function() {	   
-				console.log("REG");  	
-	        	$('#board').attr('action', '/updateBoard').submit();      
-	        })
+	        /* 상세 */
+	        $('#a[id^="selectBoard"]').on('click', function(){
+	        	console.log($('#a[id^="selectBoard"]').val);  
+	        	//$('#board').attr('action', '/detailBoard').submit();
+	        });
 	    });
+    	
+    	function fnSelectBoard(idx){
+    		 document .getElementById( "board" );\
+    		 
+    	}
     </script>
 </head>
 <body>
 <div style="text-align: center;">
-    <h1>메인</h1>
+    <h1>메인화면</h1>
     <form id="board" method="POST">     
-	    <table style="width: 700px; margin: auto">
-	        <tr>
-	            <th style="width: 10%">번호</th>
-	            <th style="width: 50%">제목</th>
-	            <th style="width: 15%">작성자</th>
-	            <th style="width: 15%">등록일</th>
-	            <th style="width: 10%">조회수</th>
-	        </tr>
-	        <c:forEach var="board" items="${boardList}">
-	            <tr>
-	                <td>${board.id}</td>
-	                <td style="text-align: left"><a href="getBoard?seq=${board.id}">${board.title}</a></td>
-	                <td>test</td>
-	                <td><fmt:formatDate value="${board.date}" pattern="yyyy-MM-dd"></fmt:formatDate> </td>
-	                <td>${board.content}</td>
-	            </tr>
-	        </c:forEach>
+    	<input id="boardId" name="id"></input>
+    	<table>
+		        <c:forEach var="board" items="${boardList}">
+		        <tr>
+		        	<td>${board.id}</td>
+		        	<td>${board.title}</td>
+		        	<td><a href="javascript:void(0)" onclick="fnSelectBoard(<c:out value="${board.id}"/>)"><c:out value="${board.content}"/></a></td>
+		        </tr>        	   
+		        </c:forEach>
 	    </table>
-	    <button id="reg">등록</button>
-	    <button id="select">조회</button>
 	</form>
 </div>
 </body>

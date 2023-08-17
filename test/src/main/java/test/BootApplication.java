@@ -7,7 +7,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing 		// BaseTime 자동으로 세팅
-@ServletComponentScan 	//서블릿 자동 등록
 @SpringBootApplication
 public class BootApplication {
 

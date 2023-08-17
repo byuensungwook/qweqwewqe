@@ -15,13 +15,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import test.dto.BoardDto;
-import test.service.MemberService;
+import test.service.BoardService;
 
 @Controller
-public class MemberController {
+public class BoardController {
 
 	@Autowired
-	MemberService memeberService;
+	BoardService boardService;
 	
 	
 	/**
@@ -45,7 +45,7 @@ public class MemberController {
 		System.out.println(dto.toString());
 		System.out.println("##############selectBoardPost.do#############");
 		
-		List list = memeberService.selectBoard(dto);
+		List list = boardService.selectBoard(dto);
 				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -80,7 +80,7 @@ public class MemberController {
 			    .build();
 		  
 		
-		List list = memeberService.selectBoard(dto);
+		List list = boardService.selectBoard(dto);
 				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -109,7 +109,7 @@ public class MemberController {
 //		
 //		System.out.println("##############ist.do#############");
 //		
-//		List list = memeberService.selectBoard();
+//		List list = boardService.selectBoard();
 //				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -118,7 +118,7 @@ public class MemberController {
 //		return json;
 //		
 //		
-////		List<?> list = memeberService.list(dto);
+////		List<?> list = boardService.list(dto);
 ////		model.addAttribute("boardList", list);
 ////		
 ////		return "index";
@@ -133,19 +133,19 @@ public class MemberController {
 	 * @return "forward:/egovSampleList.do"
 	 * @exception Exception
 	 */
-	@PostMapping("/updateBoard")
+	@PostMapping("/detailBoard")
 //	@ResponseBody
 	//@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public String updateBoard(@ModelAttribute BoardDto dto, Model model, SessionStatus status) throws Exception {
 		
 		System.out.println("##############updateBoard.do#############");
 		
-//		memeberService.update(dto);
+//		boardService.update(dto);
 				
-//		List<?> list = memeberService.list(dto);
+//		List<?> list = boardService.list(dto);
 //		model.addAttribute("list", list);
 		
-		return "/updateBoard";
+		return "/detailBoard";
 	}
 	
 	/**
@@ -171,9 +171,9 @@ public class MemberController {
 		System.out.println(dto.toString());
 		System.out.println("##############regBoard.do#############");
 		
-		memeberService.update(dto);
+		boardService.update(dto);
 				
-//		List<?> list = memeberService.list(dto);
+//		List<?> list = boardService.list(dto);
 //		model.addAttribute("list", list);
 		
 		attributes.addAttribute("title", dto.getTitle());
