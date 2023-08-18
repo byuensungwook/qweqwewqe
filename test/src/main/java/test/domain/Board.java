@@ -1,20 +1,12 @@
 package test.domain;
 
-import java.time.LocalTime;
 import java.util.Date;
 
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalTimeConverter;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,23 +25,42 @@ public class Board extends BaseTime {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private String writer;
+private Long id;
 	
 	private String title;
 	
+	private String writer;
+	
 	private String content;
+	
+	private Integer replyLc; //답글
+	
+	private String expiredYn; //만료
+	
+	private String delYn; //사용여부
+	
+	private Date postBgng; //게시시작일자
+	
+	private Date postEnd; //게시종료일자
+	
+	private Integer searchCnt; //조회건수	
 
 	/* 생성자에 @Builder 적용
 	 * 객체를 정의하고 그 객체를 생성할 때 보통 생성자를 통해 생성
 	 * 데이터 일관성을 위해 정보들을 다 받은 후에 객체를 생성
 	 */
     @Builder
-	public Board(Long id, String title, String writer, String content) {
-    	this.id = id;
+	public Board(Long id, String title, String writer, String content, Integer replyLc,
+			String expiredYn, String delYn, Date postBgng, Date postEnd, Integer searchCnt) {
+		this.id = id;
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
+		this.replyLc = replyLc;
+		this.expiredYn = expiredYn;
+		this.delYn = delYn;
+		this.postBgng = postBgng;
+		this.postEnd = postEnd;
+		this.searchCnt = searchCnt;
 	}           
 }

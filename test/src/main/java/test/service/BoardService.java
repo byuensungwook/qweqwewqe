@@ -1,6 +1,9 @@
 package test.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -22,16 +25,28 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	/* select board */
-	public List selectBoard(BoardDto dto) throws Exception {
+	public List<BoardDto> selectBoard(BoardDto dto) throws Exception {
 		
 		List<Board> list = boardRepository.findAll(BoardSpecification.likeTitle(dto.getTitle()));
 		
 		//List<Board> list = (List<Board>) JpaSpecification.likeTitle(dto.getTitle());
 		
 		/* entity > dto */
-		List<BoardDto> rtnlist = list.stream().map(BoardDto::new).collect(Collectors.toList());			
+		List<BoardDto> rtnDto = list.stream().map(BoardDto::new).collect(Collectors.toList());			
 		
-		return rtnlist;
+		return rtnDto;
+	}
+	
+	/* select Board Detail */
+	public BoardDto selectBoardDetail(BoardDto dto) {
+		
+		Long id = dto.getId();
+		
+		Optional<Board> board = boardRepository.findById(dto.getId());
+		
+		BoardDto rntDto = new BoardDto(board.get());
+					
+		return rntDto;
 	}
 	
 	/* insert board */

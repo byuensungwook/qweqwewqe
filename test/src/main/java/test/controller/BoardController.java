@@ -37,6 +37,7 @@ public class BoardController {
 	//@RequestMapping(value = "/selectBoard.do", method = RequestMethod.POST) 
 	public String selectBoardPost(@RequestParam Map map, Model model, SessionStatus status) throws Exception {
 		
+		//조회구분에 따라 조호조건 빌더 수정
 		BoardDto dto = BoardDto.builder()
 				.title((String) map.get("title"))
 				.content((String) map.get("content"))
@@ -45,7 +46,7 @@ public class BoardController {
 		System.out.println(dto.toString());
 		System.out.println("##############selectBoardPost.do#############");
 		
-		List list = boardService.selectBoard(dto);
+		List<BoardDto> list = boardService.selectBoard(dto);
 				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -55,7 +56,7 @@ public class BoardController {
 //		
 		model.addAttribute("boardList", list);
 		
-		return "/selectBoard";
+		return "/selectBoardList";
 	}
 	
 	/**
@@ -80,7 +81,7 @@ public class BoardController {
 			    .build();
 		  
 		
-		List list = boardService.selectBoard(dto);
+		List<BoardDto> list = boardService.selectBoard(dto);
 				
 //		ObjectMapper mapper = new ObjectMapper();
 //		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
@@ -90,7 +91,7 @@ public class BoardController {
 //		
 		model.addAttribute("boardList", list);
 		
-		return "/selectBoard";
+		return "/selectBoardList";
 	}
 	
 //	/**
@@ -126,7 +127,7 @@ public class BoardController {
 	
 	
 	/**
-	 * 글을 수정한다.
+	 * 상세조회.
 	 * @param sampleVO - 수정할 정보가 담긴 VO
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param status
@@ -136,14 +137,20 @@ public class BoardController {
 	@PostMapping("/detailBoard")
 //	@ResponseBody
 	//@RequestMapping(value = "/update.do", method = RequestMethod.POST)
-	public String updateBoard(@ModelAttribute BoardDto dto, Model model, SessionStatus status) throws Exception {
+	public String updateBoard(@RequestParam Map map, Model model, SessionStatus status) throws Exception {
 		
-		System.out.println("##############updateBoard.do#############");
+		System.out.println("##############detailBoard.do#############");
+		
+		//toString(), String.valueOf -> 전자는 null인 경우 이셉션, 후자는 어떠한 값이 오더라도 변환
+		BoardDto dto = BoardDto.builder()			
+				.id(Long.parseLong(String.valueOf(map.get("id"))))
+				.build();
+		
 		
 //		boardService.update(dto);
 				
-//		List<?> list = boardService.list(dto);
-//		model.addAttribute("list", list);
+		BoardDto boardDetail = boardService.selectBoardDetail(dto);
+		model.addAttribute("board", boardDetail);
 		
 		return "/detailBoard";
 	}

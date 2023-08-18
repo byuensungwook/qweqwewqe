@@ -24,29 +24,56 @@ public class BoardDto {
 	
 	private String content;
 	
+	private String searchScCd;
+	
+	private Integer replyLc; //답글
+	
+	private String expiredYn; //만료
+	
+	private String delYn; //사용여부
+	
+	private Date postBgng; //게시시작일자
+	
+	private Date postEnd; //게시종료일자
+	
+	private Integer searchCnt; //조회건수
+	
 	private LocalDateTime modDate;
 	
 	private LocalDateTime regDate;
 	
-	/*
-	 * 빌더패턴을 사용하요 
+	/* 생성자에 @Builder 적용
+	 * 객체를 정의하고 그 객체를 생성할 때 보통 생성자를 통해 생성
+	 * 데이터 일관성을 위해 정보들을 다 받은 후에 객체를 생성
 	 */
-	@Builder
-	public BoardDto(Long id, String title, String writer, String content, LocalDateTime modDate, LocalDateTime regDate) {
+    @Builder
+	public BoardDto(Long id, String title, String writer, String content, String searchScCd, Integer replyLc,
+			String expiredYn, String delYn, Date postBgng, Date postEnd, Integer searchCnt) {
 		this.id = id;
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
-		this.modDate = modDate;
-		this.regDate = regDate;
-	}
+		this.searchScCd = searchScCd;
+		this.replyLc = replyLc;
+		this.expiredYn = expiredYn;
+		this.delYn = delYn;
+		this.postBgng = postBgng;
+		this.postEnd = postEnd;
+		this.searchCnt = searchCnt;
+	}    
 	
 	/* Entity to Dto */
     public BoardDto(Board board) {
-    	this.id = board.getId();
+		this.id = board.getId();
 		this.title = board.getTitle();
 		this.writer = board.getWriter();
 		this.content = board.getContent();
+		this.replyLc = board.getReplyLc();
+		this.expiredYn = board.getExpiredYn();
+		this.delYn = board.getDelYn();
+		this.postBgng = board.getPostBgng();
+		this.postEnd = board.getPostEnd();
+		this.searchCnt = board.getSearchCnt();
 		this.modDate = board.getModDate();
 		this.regDate = board.getRegDate();
 	}
@@ -58,6 +85,12 @@ public class BoardDto {
         		.title(title)
         		.writer(writer)
                 .content(content)
+                .replyLc(replyLc)
+                .expiredYn(expiredYn)
+                .delYn(delYn)
+                .postBgng(postBgng)
+                .postEnd(postEnd)
+                .searchCnt(searchCnt)
                 .build();
-    }
+    }	   
 }

@@ -1,26 +1,49 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="<c:url value='/css/egovframework/sample.css'/>" />
-<title>Basic Sample</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="<c:url value='/'/>css/base.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/layout.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/component.css">
+	<link rel="stylesheet" href="<c:url value='/'/>css/page.css">
+	<script src="<c:url value='/'/>js/jquery-1.11.2.min.js"></script>
+	<script src="<c:url value='/'/>js/ui.js"></script>
+	
+<title>eGovFrame 템플릿</title>
+
+<script type="text/javascript">
+	function fncGoAfterErrorPage() {
+		history.back(-2);
+	}
+</script>
+
 </head>
 
 <body>
-    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="100%" height="100%" align="center" valign="middle" style="padding-top: 150px;"><table border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td class="<spring:message code='image.errorBg' />">
-                            <span style="font-family: Tahoma; font-weight: bold; color: #000000; line-height: 150%; width: 440px; height: 70px;"></span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+
+    <!-- skip navigation -->
+    <a href="#contents" class="skip_navi">본문 바로가기</a>
+
+    <div class="wrap">
+        <div class="error_page">
+            <h1>Error</h1>
+            <div class="inner">
+<!--				<p>세션이 만료되었습니다.</p> -->
+<!--				<p>데이터 처리 중 오류가 발생하였습니다.</p> -->
+<!-- 				<p>수행중 오류가 발생하였습니다.</p> -->
+<!-- 				<p>알 수 없는 오류가 발생하였습니다.</p> -->
+<!-- 				<p>트랜젝션 수행중 오류가 발생하였습니다.</p> -->
+				<p>오류발생알림화면<br>(허용되지 않는 요청을 하셨습니다.)</p>
+                <br>
+                <a href="javascript:fncGoAfterErrorPage();" class="btn btn_blue_46 w_130">이전페이지</a>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
