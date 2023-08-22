@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -25,7 +27,7 @@ public class Board extends BaseTime {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+	private Long id;
 	
 	private String title;
 	
@@ -39,8 +41,10 @@ private Long id;
 	
 	private String delYn; //사용여부
 	
+	@Temporal(TemporalType.DATE)
 	private Date postBgng; //게시시작일자
 	
+	@Temporal(TemporalType.DATE)	//DATE:년월일, TIME:시분초, TIMESTAMP:date+time
 	private Date postEnd; //게시종료일자
 	
 	private Integer searchCnt; //조회건수	

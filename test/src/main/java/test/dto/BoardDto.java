@@ -24,7 +24,9 @@ public class BoardDto {
 	
 	private String content;
 	
-	private String searchScCd;
+	private String searchScCd;	//검색조건
+	
+	private String searchWord;	//검색어
 	
 	private Integer replyLc; //답글
 	
@@ -47,13 +49,14 @@ public class BoardDto {
 	 * 데이터 일관성을 위해 정보들을 다 받은 후에 객체를 생성
 	 */
     @Builder
-	public BoardDto(Long id, String title, String writer, String content, String searchScCd, Integer replyLc,
-			String expiredYn, String delYn, Date postBgng, Date postEnd, Integer searchCnt) {
+	public BoardDto(Long id, String title, String writer, String content, String searchScCd, String searchWord,
+			Integer replyLc, String expiredYn, String delYn, Date postBgng, Date postEnd, Integer searchCnt) {
 		this.id = id;
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
 		this.searchScCd = searchScCd;
+		this.searchWord = searchWord;
 		this.replyLc = replyLc;
 		this.expiredYn = expiredYn;
 		this.delYn = delYn;

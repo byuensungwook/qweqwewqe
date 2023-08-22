@@ -1,5 +1,7 @@
 package test.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,21 +41,16 @@ public class BoardController {
 		
 		//조회구분에 따라 조호조건 빌더 수정
 		BoardDto dto = BoardDto.builder()
-				.title((String) map.get("title"))
-				.content((String) map.get("content"))
+				.searchScCd((String) map.get("searchScCd"))
+				.searchWord((String) map.get("searchWord"))
 				.build();
 		
 		System.out.println(dto.toString());
 		System.out.println("##############selectBoardPost.do#############");
 		
 		List<BoardDto> list = boardService.selectBoard(dto);
-				
-//		ObjectMapper mapper = new ObjectMapper();
-//		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-//		System.out.println("json String =============================================" + json);
-//		
-//		return json;
-//		
+
+		model.addAttribute("searchBoard", dto);
 		model.addAttribute("boardList", list);
 		
 		return "/selectBoardList";
@@ -76,19 +73,13 @@ public class BoardController {
 		System.out.println("##############content#############" + attributes.getAttribute("content"));
 		
 		BoardDto dto = BoardDto.builder()
-			    .title((String) attributes.getAttribute("title"))
-			    .content((String) attributes.getAttribute("content"))		    
+			    .searchScCd((String) attributes.getAttribute("searchScCd"))
+			    .searchWord((String) attributes.getAttribute("searchWord"))		    
 			    .build();
 		  
 		
 		List<BoardDto> list = boardService.selectBoard(dto);
-				
-//		ObjectMapper mapper = new ObjectMapper();
-//		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-//		System.out.println("json String =============================================" + json);
-//		
-//		return json;
-//		
+
 		model.addAttribute("boardList", list);
 		
 		return "/selectBoardList";
@@ -142,18 +133,32 @@ public class BoardController {
 		System.out.println("##############detailBoard.do#############");
 		
 		//toString(), String.valueOf -> 전자는 null인 경우 이셉션, 후자는 어떠한 값이 오더라도 변환
-		BoardDto dto = BoardDto.builder()			
+		
+		BoardDto dto; 
+		
+		//상세와 등록 dto 분기
+		if(!"".equals(map.get("id")) && map.get("id") != null) {
+			dto = BoardDto.builder()			
 				.id(Long.parseLong(String.valueOf(map.get("id"))))
+				.searchWord(String.valueOf(map.get("searchWord")))
+				.searchScCd(String.valueOf(map.get("searchScCd")))
 				.build();
+			BoardDto boardDetail = boardService.selectBoardDetail(dto);
+			
+			model.addAttribute("board", boardDetail);
+			
+		} else {
+			dto = BoardDto.builder()			
+				.searchWord(String.valueOf(map.get("searchWord")))
+				.searchScCd(String.valueOf(map.get("searchScCd")))
+				.build();
+		}
 		
-		
-//		boardService.update(dto);
-				
-		BoardDto boardDetail = boardService.selectBoardDetail(dto);
-		model.addAttribute("board", boardDetail);
-		
+		model.addAttribute("searchBoard", dto);
+
 		return "/detailBoard";
 	}
+	
 	
 	/**
 	 * 글을 수정한다. redirect 
@@ -168,12 +173,33 @@ public class BoardController {
 	//@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public String regBoard(@RequestParam Map map, SessionStatus status, RedirectAttributes attributes) throws Exception {
 		
+		BoardDto dto;
 		
-		BoardDto dto = BoardDto.builder()			
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		
+		//수정과 최초등록 dto 분기
+		if(!"".equals(map.get("id")) && map.get("id") != null) {
+			dto = BoardDto.builder()	
+				.id(Long.parseLong(String.valueOf(map.get("id"))))
 				.title(String.valueOf(map.get("title")))
 				.writer(String.valueOf(map.get("writer")))
 				.content(String.valueOf(map.get("content")))
+				.postBgng(format.parse(String.valueOf(map.get("postBgng"))))
+				.postEnd(format.parse(String.valueOf(map.get("postEnd"))))
+				.searchWord(String.valueOf(map.get("searchWord")))
+				.searchScCd(String.valueOf(map.get("searchScCd")))
 				.build();
+		} else {
+			dto = BoardDto.builder()	
+				.title(String.valueOf(map.get("title")))
+				.writer(String.valueOf(map.get("writer")))
+				.content(String.valueOf(map.get("content")))
+				.postBgng(format.parse(String.valueOf(map.get("postBgng"))))
+				.postEnd(format.parse(String.valueOf(map.get("postEnd"))))
+				.searchWord(String.valueOf(map.get("searchWord")))
+				.searchScCd(String.valueOf(map.get("searchScCd")))
+				.build();
+		}
 		
 		System.out.println(dto.toString());
 		System.out.println("##############regBoard.do#############");
@@ -183,8 +209,8 @@ public class BoardController {
 //		List<?> list = boardService.list(dto);
 //		model.addAttribute("list", list);
 		
-		attributes.addAttribute("title", dto.getTitle());
-		attributes.addAttribute("content", dto.getContent());
+		attributes.addAttribute("searchScCd", dto.getSearchScCd());
+		attributes.addAttribute("searchWord", dto.getSearchWord());
 		
 		return "redirect:selectBoardGet";
 	}

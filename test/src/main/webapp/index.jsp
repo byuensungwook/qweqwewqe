@@ -28,8 +28,7 @@
 	<script src="<c:url value='/'/>js/ui.js"></script>
 	
 	<script type="text/javascript">	
-		$(document).ready(function () {
-			
+		$(function(){ 	
 	       /*$('#select').on('click', function () {
 	            $.ajax({
 	                type : 'POST',
@@ -45,6 +44,11 @@
 	            })
 	        })*/	        
 	        
+	        /* 로그인 */
+	        $('#loginBtn').on('click', function(){
+	        	$('#mainForm').attr('action', "/login").submit();
+	        });
+	       
 	        /* 상세 */
 	        $('a[name^="selectBoard"]').on('click', function(){
 	        	var aName = this.getAttribute('name');				//$('a[name^="selectBoard"]').attr('name')
@@ -53,7 +57,7 @@
 	        	$('#mainForm').attr('action', "/detailBoard").submit();
 	        });
 	       
-	        /* 더보가 */
+	        /* 더보기 */
 	        $('a[id^="more"]').on('click', function(){
 	        	var aId = this.getAttribute('id');				//$('a[name^="selectBoard"]').attr('name')
 	        	var id = aId.substr(aId.length - 1, 1)			//선택한 대상의 게시글 id	        	
@@ -84,6 +88,9 @@
 	
 	        <div class="container">
 	            <div class="p_main">
+                	<div style="padding-right: 100px; height: 30px;">
+	               		<button id="loginBtn" class="btn btn_blue_30" style="float:right">로그인</button>
+                	</div>
 	                <div class="visual">
 	                    <p>
 	                        <span class="t1">표준프레임워크</span>

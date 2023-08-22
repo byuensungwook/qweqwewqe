@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import test.domain.Board;
 import test.dto.BoardDto;
 import test.repository.BoardRepository;
-import test.repository.BoardSpecification;
+import test.repository.JpaSpecification;
 
 @Service
 public class BoardService {
@@ -27,7 +27,7 @@ public class BoardService {
 	/* select board */
 	public List<BoardDto> selectBoard(BoardDto dto) throws Exception {
 		
-		List<Board> list = boardRepository.findAll(BoardSpecification.likeTitle(dto.getTitle()));
+		List<Board> list = boardRepository.findAll(JpaSpecification.likeTitle(dto));
 		
 		//List<Board> list = (List<Board>) JpaSpecification.likeTitle(dto.getTitle());
 		

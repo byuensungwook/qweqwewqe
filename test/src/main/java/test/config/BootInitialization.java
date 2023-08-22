@@ -1,5 +1,7 @@
 package test.config;
 
+import java.util.Locale;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -21,7 +23,9 @@ public class BootInitialization implements WebMvcConfigurer {
 
 	@Bean
     public SessionLocaleResolver localeResolver() {
-        return new SessionLocaleResolver();
+		SessionLocaleResolver session = new SessionLocaleResolver();
+		session.setDefaultLocale(new Locale("ko"));
+        return session;
     }
 
 	@Bean
